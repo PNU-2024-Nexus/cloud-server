@@ -4,3 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+async-std = "1.10.0"
+async-tungstenite = "0.17.0"
+futures = "0.3"
