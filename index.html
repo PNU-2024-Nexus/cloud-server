@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexus</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <h1> Nexus Robot Monitoring </h1>
+      </header>
+
+      <main>
+        <section id="monitoring-section">
+          <h2>Monitoring Video</h2>
+          <div class="input-group">
+            <label for="hostInput">Host</label>
+            <input type="text" id="hostInput" placeholder="Enter host" />
+          </div>
+          <div class="input-group">
+            <label for="portInput">Port</label>
+            <input type="number" id="portInput" placeholder="Enter port" />
+          </div>
+          <button id="findChannelsButton">Find Channels</button>
+          <div class="input-group">
+            <label for="channelSelect">Channel</label>
+            <select id="channelSelect"></select>
+          </div>
+          <div class="box">
+            <video id="videoElement" autoplay></video>
+          </div>
+        </section>
+
+        <section id="lidar-section">
+          <h2>Lidar</h2>
+          <div class="input-group">
+            <label for="lidarHostInput">Host</label>
+            <input type="text" id="lidarHostInput" placeholder="Enter host" />
+          </div>
+          <div class="input-group">
+            <label for="lidarPortInput">Port</label>
+            <input type="number" id="lidarPortInput" placeholder="Enter port" />
+          </div>
+          <button id="findLidarChannelsButton">Find Channels</button>
+          <div class="input-group">
+            <label for="lidarChannelSelect">Channel</label>
+            <select id="lidarChannelSelect"></select>
+          </div>
+          <div class="box"> Unity 화면 </div>
+        </section>
+        <section id="control-section">
+          <h2>Robot Control</h2>
+          <div class="input-group">
+            <label for="robotSelect">Robot List</label>
+            <select id="robotSelect"></select>
+          </div>
+          <button id="controlButton">Control Robot</button>
+        </section>
+      </main>
+    </div>
+
+    <script src="./script.js" type="module"></script>
+  </body>
+</html>
