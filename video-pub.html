@@ -19,48 +19,37 @@
 
       <main>
         <div class="column">
-          <section id="monitoring-section">
+          <section id="publish-section">
             <header>
-              <h1>Robot Monitoring</h1>
+              <h1>Video Publish</h1>
             </header>
+
             <div class="input-group">
               <label for="hostInput">Select Server Channel</label>
               <input type="text" id="hostInput" placeholder="Enter host" />
             </div>
+            <button class="secondary" id="checkCameraPermissionButton"
+              >Check Camera Permission</button
+            >
+            <br />
 
-            <!-- <video id="videoElement" autoplay></video> -->
-            <img src="https://placehold.co/1080x720" alt="Placeholder" />
-          </section>
-
-          <section id="control-section">
-            <header>
-              <h1>Robot Control</h1>
-            </header>
             <div class="input-group">
-              <label for="robotSelect">Robot List</label>
-              <select id="robotSelect"></select>
-            </div>
-            <button id="controlButton">Control Robot</button>
-          </section>
-        </div>
-
-        <div class="column">
-          <section id="lidar-section">
-            <header>
-              <h1>Lidar</h1>
-            </header>
-            <div class="input-group">
-              <label for="lidarHostInput">Select Server Channel</label>
-              <input type="text" id="lidarHostInput" placeholder="Enter host" />
+              Camera Permission: <label id="cameraPermissionLabel"></label>
             </div>
 
-            <!-- Unity 화면 -->
+            <div class="input-group">
+              <label for="cameraSelect">Camera</label>
+              <select id="cameraSelect"></select>
+            </div>
+
             <img src="https://placehold.co/1080x720" alt="Placeholder" />
+
+            <button id="publishButton">Publish</button>
           </section>
         </div>
       </main>
     </div>
 
-    <script src="./script.js" type="module"></script>
+    <script src="./video-pub.js" type="module"></script>
   </body>
 </html>
