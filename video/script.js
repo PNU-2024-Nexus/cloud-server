@@ -1,24 +1,22 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { VIDEO_PUB_URL } from "../env.js";
 
-const videoPubUrl = process.env.VIDEO_PUB_URL;
-const videoSubUrl = process.env.VIDEO_SUB_URL;
+const videoPubUrl = VIDEO_PUB_URL;
+let videoPubSocket;
 
 /**
  * WebSocket 연결을 여는 함수
  */
 function openVideoPubWebSocketConnections() {
-  let videoPubSocket = new WebSocket(videoPubUrl);
-
+  videoPubSocket = new WebSocket(videoPubUrl);
   videoPubSocket.binaryType = "arraybuffer";
 
-  return videoPubSocket;
-}
+  videoPubSocket.onclose = function () {
+    console.log("WebSocket connection closed.");
+  };
 
-function openVideoSubWebSocketConnections() {
-  let videoSubSocket = new WebSocket(videoSubUrl);
-
-  videoSubSocket.binaryType = "arraybuffer";
+  videoPubSocket.onerror = function (error) {
+    console.error("WebSocket error:", error);
+  };
 
   return videoPubSocket;
 }
@@ -29,12 +27,13 @@ function openVideoSubWebSocketConnections() {
 function closeWebSocketConnections() {
   if (videoPubSocket) {
     videoPubSocket.close();
-  }
-  if (videoSubSocket) {
-    videoSubSocket.close();
+    videoPubSocket = null;
   }
 }
 
+/**
+ * 카메라 권한을 확인하는 함수
+ */
 async function checkCameraPermission() {
   try {
     const result = await navigator.permissions.query({ name: "camera" });
@@ -102,10 +101,16 @@ async function getVideoSrcObject() {
   return stream;
 }
 
+/**
+ * 카메라 선택 시 스트림을 표시하는 함수
+ */
+async function handleCameraSelectionChange() {
+  await getVideoSrcObject();
+}
+
 async function publish() {
   const stream = await getVideoSrcObject();
-
-  const websocket = openVideoPubWebSocketConnections();
+  videoPubSocket = openVideoPubWebSocketConnections();
 
   const codecs = "h264";
   const codecsValue = "avc1.42E03C";
@@ -116,7 +121,7 @@ async function publish() {
   const bitrateMode = "constant";
   const latencyMode = "realtime";
 
-  websocket.onopen = async function () {
+  videoPubSocket.onopen = async function () {
     const mime = `video/${codecs};codecs=${codecsValue};width=${videoWidth};height=${videoHeight};`;
     websocket.send(mime);
 
@@ -140,11 +145,6 @@ async function publish() {
     };
 
     await encode(stream, videoEncoderConfig, handleVideoChunk);
-    keepWebSocketAlive(websocket);
-  };
-
-  websocket.onclose = function () {
-    console.log("websocket closed");
   };
 }
 
@@ -173,7 +173,7 @@ async function encode(
 
   videoEncoder.configure(videoEncoderConfig);
 
-  while (websocket.OPEN) {
+  while (videoPubSocket.readyState === WebSocket.OPEN) {
     const { done, value } = await reader.read();
 
     if (done) return;
@@ -201,16 +201,10 @@ async function unpublish() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  makeResolutionOptions();
   checkCameraPermissionButton.addEventListener("click", checkCameraPermission);
   videoPublishButton.addEventListener("click", publish);
   videoUnpublishButton.addEventListener("click", unpublish);
+  document
+    .getElementById("cameraSelect")
+    .addEventListener("change", handleCameraSelectionChange);
 });
-
-// NOTE: HTML 파일에서 호출할 수 있는 함수를 전역으로 노출
-window.openVideoPubWebSocketConnections = openVideoPubWebSocketConnections;
-window.openVideoSubWebSocketConnections = openVideoSubWebSocketConnections;
-window.closeWebSocketConnections = closeWebSocketConnections;
-window.subscribeVideoData = subscribeVideoData;
-window.unsubscribeVideoData = unsubscribeVideoData;
-window.publishVideoData = publishVideoData;
