@@ -1,7 +1,39 @@
-document
-  .getElementById("checkCameraPermissionButton")
-  .addEventListener("click", checkCameraPermission);
-document.getElementById("publishButton").addEventListener("click", publish);
+import dotenv from "dotenv";
+dotenv.config();
+
+const videoPubUrl = process.env.VIDEO_PUB_URL;
+const videoSubUrl = process.env.VIDEO_SUB_URL;
+
+/**
+ * WebSocket 연결을 여는 함수
+ */
+function openVideoPubWebSocketConnections() {
+  let videoPubSocket = new WebSocket(videoPubUrl);
+
+  videoPubSocket.binaryType = "arraybuffer";
+
+  return videoPubSocket;
+}
+
+function openVideoSubWebSocketConnections() {
+  let videoSubSocket = new WebSocket(videoSubUrl);
+
+  videoSubSocket.binaryType = "arraybuffer";
+
+  return videoPubSocket;
+}
+
+/**
+ * WebSocket 연결을 닫는 함수
+ */
+function closeWebSocketConnections() {
+  if (videoPubSocket) {
+    videoPubSocket.close();
+  }
+  if (videoSubSocket) {
+    videoSubSocket.close();
+  }
+}
 
 async function checkCameraPermission() {
   try {
@@ -73,16 +105,12 @@ async function getVideoSrcObject() {
 async function publish() {
   const stream = await getVideoSrcObject();
 
-  // TODO: server URL
-  const serverURL = "";
+  const websocket = openVideoPubWebSocketConnections();
 
-  const websocket = new WebSocket(serverURL);
-  websocket.binaryType = "arraybuffer";
-
-  const codecs = "";
-  const codecsValue = "";
-  const videoWidth = "";
-  const videoHeight = "";
+  const codecs = "h264";
+  const codecsValue = "avc1.42E03C";
+  const videoWidth = "1280";
+  const videoHeight = "720";
   const bitrate = "6000000";
   const framerate = "20";
   const bitrateMode = "constant";
@@ -163,3 +191,26 @@ async function encode(
     value.close();
   }
 }
+
+async function unpublish() {
+  const stream = document.getElementById("videoElement").srcObject;
+  const videoTrack = stream.getVideoTracks()[0];
+  videoTrack.stop();
+
+  closeWebSocketConnections();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  makeResolutionOptions();
+  checkCameraPermissionButton.addEventListener("click", checkCameraPermission);
+  videoPublishButton.addEventListener("click", publish);
+  videoUnpublishButton.addEventListener("click", unpublish);
+});
+
+// NOTE: HTML 파일에서 호출할 수 있는 함수를 전역으로 노출
+window.openVideoPubWebSocketConnections = openVideoPubWebSocketConnections;
+window.openVideoSubWebSocketConnections = openVideoSubWebSocketConnections;
+window.closeWebSocketConnections = closeWebSocketConnections;
+window.subscribeVideoData = subscribeVideoData;
+window.unsubscribeVideoData = unsubscribeVideoData;
+window.publishVideoData = publishVideoData;

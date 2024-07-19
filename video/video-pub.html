@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nexus</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
   </head>
   <body>
     <div id="container">
       <nav>
         <h1>NEXUS</h1>
         <ul>
-          <li><a href="./index.html">Home</a></li>
+          <li><a href="../index.html">Home</a></li>
           <li><a href="./video-pub.html">Video Publish</a></li>
         </ul>
       </nav>
@@ -25,8 +25,8 @@
             </header>
 
             <div class="input-group">
-              <label for="hostInput">Select Server Channel</label>
-              <input type="text" id="hostInput" placeholder="Enter host" />
+              <label for="serverInput">Select Server Channel</label>
+              <input type="text" id="serverInput" placeholder="Enter host" />
             </div>
             <button class="secondary" id="checkCameraPermissionButton"
               >Check Camera Permission</button
@@ -34,7 +34,8 @@
             <br />
 
             <div class="input-group">
-              Camera Permission: <label id="cameraPermissionLabel"></label>
+              Camera Permission:
+              <label id="cameraPermissionLabel"></label>
             </div>
 
             <div class="input-group">
@@ -49,12 +50,14 @@
             />
             <video id="videoElement" autoplay style="display: none"></video>
 
-            <button id="publishButton">Publish</button>
+            <button id="videoPublishButton">Publish</button>
+            <button id="videoUnpublishButton">Unpublish</button>
           </section>
         </div>
       </main>
     </div>
 
-    <script src="./video-pub.js" type="module"></script>
+    <script src="./initialize.js" type="module"></script>
+    <script src="./script.js" type="module"></script>
   </body>
 </html>
