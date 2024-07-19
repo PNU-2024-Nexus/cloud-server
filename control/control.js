@@ -1,10 +1,43 @@
-require("dotenv").config();
+import { CONTROL_PUB_URL, CONTROL_SUB_URL } from "../env.js";
 
-const robotControlPubUrl = process.env.ROBOTCONTROL_PUB_URL;
-const robotControlSubUrl = process.env.ROBOTCONTROL_SUB_URL;
+const robotControlPubUrl = CONTROL_PUB_URL;
+const robotControlSubUrl = CONTROL_SUB_URL;
 
-const robotControlPubSocket = new WebSocket(robotControlPubUrl);
-const robotControlSubSocket = new WebSocket(robotControlSubUrl);
+/**
+ * 로봇 리스트
+ */
+const robotList = [
+  { id: 1, name: "Robot Alpha" },
+  { id: 2, name: "Robot Beta" },
+  { id: 3, name: "Robot Gamma" },
+];
+
+/**
+ * 로봇 리스트를 로드하여 select 요소에 추가하는 함수
+ */
+function loadRobotList() {
+  const robotSelect = document.getElementById("robotSelect");
+  robotList.forEach((robot) => {
+    const option = document.createElement("option");
+    option.value = robot.id;
+    option.text = robot.name;
+    robotSelect.appendChild(option);
+  });
+}
+
+/**
+ * 로봇을 제어하는 버튼 클릭 이벤트 핸들러
+ */
+function controlRobot() {
+  const robotControlPubSocket = new WebSocket(robotControlPubUrl);
+  const robotControlSubSocket = new WebSocket(robotControlSubUrl);
+
+  const robotSelect = document.getElementById("robotSelect");
+  const selectedRobotId = robotSelect.value;
+  console.log("Selected Robot ID:", selectedRobotId);
+
+  // TODO: 선택된 로봇을 제어하는 로직 추가
+}
 
 /**
  * WebSocket 연결을 여는 함수
@@ -80,9 +113,9 @@ function publishRobotControlData(data) {
   robotControlPubSocket.send(buffer);
 }
 
-// NOTE: HTML 파일에서 호출할 수 있는 함수를 전역으로 노출
-window.openWebSocketConnections = openWebSocketConnections;
-window.closeWebSocketConnections = closeWebSocketConnections;
-window.subscribeRobotControlData = subscribeRobotControlData;
-window.unsubscribeRobotControlData = unsubscribeRobotControlData;
-window.publishRobotControlData = publishRobotControlData;
+document.addEventListener("DOMContentLoaded", () => {
+  loadRobotList();
+  document
+    .getElementById("controlButton")
+    .addEventListener("click", controlRobot);
+});
