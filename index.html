@@ -53,14 +53,17 @@
               <label for="lidarHostInput">Select Server Channel</label>
               <input type="text" id="lidarHostInput" placeholder="Enter host" />
             </div>
+            <button id="loadUnityButton">Load Unity</button>
 
             <!-- Unity 화면 -->
-            <img src="https://placehold.co/1080x720" alt="Placeholder" />
+            <iframe id="unityIframe" src="" width="1080" height="720" style="display: none;"></iframe>
+            <!-- <img id="placeholderImage" src="https://placehold.co/1080x720" alt="Placeholder" /> -->
           </section>
         </div>
       </main>
     </div>
 
     <script src="./control/control.js" type="module"></script>
+    <script src="./lidar/lidar.js" type="module"></script>
   </body>
 </html>

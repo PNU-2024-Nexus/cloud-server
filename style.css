@@ -282,3 +282,30 @@ fieldset {
 fieldset > select {
   margin-top: 1em;
 }
+
+/* Lidar 섹션 스타일 */
+#lidar-section {
+  display: flex;
+  flex-direction: column;
+}
+
+#lidar-section .input-group {
+  margin-bottom: 15px;
+}
+
+#lidar-section button {
+  margin-bottom: 15px;
+}
+
+#unityIframe {
+  width: 100%;
+  height: 720px;
+  border: none;
+  border-radius: 10px;
+}
+
+#placeholderImage {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
