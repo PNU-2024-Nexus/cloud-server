@@ -9,58 +9,62 @@
   </head>
   <body>
     <div id="container">
-      <nav>
-        <h1>NEXUS</h1>
-        <ul>
-          <li><a href="./index.html">Home</a></li>
-          <li><a href="./video/video-pub.html">Video Publish</a></li>
-        </ul>
-      </nav>
+      <section class="main-panel">
+        <div class="lidar-container">
+          <iframe
+            class="lidar-display"
+            id="lidarDisplay"
+            src=""
+            width="1080"
+            height="720"
+          ></iframe>
+        </div>
+        <div class="video-container">
+          <video class="video-display" id="video1"></video>
+          <video class="video-display" id="video2"></video>
+          <video class="video-display" id="video3"></video>
+        </div>
+      </section>
 
-      <main>
-        <div class="column">
-          <section id="monitoring-section">
-            <header>
-              <h1>Robot Monitoring</h1>
-            </header>
-            <div class="input-group">
-              <label for="hostInput">Select Server Channel</label>
-              <input type="text" id="hostInput" placeholder="Enter host" />
-            </div>
-
-            <!-- <video id="videoElement" autoplay></video> -->
-            <img src="https://placehold.co/1080x720" alt="Placeholder" />
-          </section>
-
-          <section id="control-section">
-            <header>
-              <h1>Robot Control</h1>
-            </header>
-            <div class="input-group">
-              <label for="robotSelect">Robot List</label>
-              <select id="robotSelect"></select>
-            </div>
-            <button id="controlButton">Control Robot</button>
-          </section>
+      <section class="right-panel">
+        <div class="panel">
+          <h2>Lidar Server</h2>
+          <input
+            type="text"
+            id="lidarServerInput"
+            placeholder="Enter Lidar server address"
+          />
+          <button id="connectLidarServer">Connect</button>
         </div>
 
-        <div class="column">
-          <section id="lidar-section">
-            <header>
-              <h1>Lidar</h1>
-            </header>
-            <div class="input-group">
-              <label for="lidarHostInput">Select Server Channel</label>
-              <input type="text" id="lidarHostInput" placeholder="Enter host" />
-            </div>
-            <button id="loadUnityButton">Load Unity</button>
-
-            <!-- Unity 화면 -->
-            <iframe id="unityIframe" src="" width="1080" height="720" style="display: none;"></iframe>
-            <!-- <img id="placeholderImage" src="https://placehold.co/1080x720" alt="Placeholder" /> -->
-          </section>
+        <div class="panel">
+          <h2>Video Subscribe</h2>
+          <button class="secondary" id="subscribeVideo1">
+            Subscribe Video 1
+          </button>
+          <button class="secondary" id="subscribeVideo2">
+            Subscribe Video 2
+          </button>
+          <button class="secondary" id="subscribeVideo3">
+            Subscribe Video 3
+          </button>
         </div>
-      </main>
+
+        <div class="panel">
+          <h2>Initial Position</h2>
+          <button id="setInitialPosition">Set Initial Position</button>
+        </div>
+
+        <div class="panel">
+          <h2>Robot Control</h2>
+          <select id="robotSelect">
+            <option value="">Select a robot</option>
+            <option value="robot1">Robot 1</option>
+            <option value="robot2">Robot 2</option>
+          </select>
+          <div id="robotCommands"></div>
+        </div>
+      </section>
     </div>
 
     <script src="./control/control.js" type="module"></script>
