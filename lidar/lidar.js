@@ -2,21 +2,22 @@
  * Unity 화면을 로드하는 함수
  */
 function loadUnityScreen() {
-  const lidarHostInput = document.getElementById('lidarHostInput');
-  const unityIframe = document.getElementById('unityIframe');
-  const placeholderImage = document.getElementById('placeholderImage');
+  const lidarHostInput = document.getElementById("lidarServerInput");
+  const unityIframe = document.getElementById("lidarDisplay");
+  // const placeholderImage = document.getElementById("placeholderImage");
 
   const host = lidarHostInput.value.trim();
   if (host) {
     unityIframe.src = host;
-    unityIframe.style.display = 'block';
-    placeholderImage.style.display = 'none';
+    unityIframe.style.display = "block";
+    // placeholderImage.style.display = "none";
   } else {
-    alert('Please enter a valid host address.');
+    alert("Please enter a valid host address.");
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const loadUnityButton = document.getElementById('loadUnityButton');
-  loadUnityButton.addEventListener('click', loadUnityScreen);
+  const connectLidarServerButton =
+    document.getElementById("connectLidarServer");
+  connectLidarServerButton.addEventListener("click", loadUnityScreen);
 });
