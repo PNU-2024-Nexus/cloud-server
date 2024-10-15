@@ -1,7 +1,7 @@
-import ControlHandler from "/scripts/controlHandler.js";
-import PositionHandler from "/scripts/positionHandler.js";
-import VideoStreamHandler from "/scripts/videoStreamHandler.js";
-import loadUnityScreen from "/scripts/loadUnityScreen.js";
+import ControlHandler from "./controlHandler.js";
+import PositionHandler from "./positionHandler.js";
+import VideoStreamHandler from "./videoStreamHandler.js";
+import loadUnityScreen from "./loadUnityScreen.js";
 
 const CONTROL_WS_URL = process.env.CONTROL_WS_URL;
 const POSITION_WS_URL = process.env.POSITION_WS_URL;
