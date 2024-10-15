@@ -163,10 +163,20 @@ iframe {
   background-color: #3a3a3c;
 }
 .video-container {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
   /* flex: 1; */
-  background-color: #3a3a3c;
+  /* background-color: #3a3a3c; */
+}
+.video-canvas-wrap {
+  position: relative;
+}
+.video-canvas-wrap canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .right-panel {
@@ -181,8 +191,8 @@ iframe {
   padding: 20px;
   margin-bottom: 20px;
 }
-#robotCommands {
-  height: 200px;
+.log-box {
+  height: 100px;
   overflow-y: auto;
   background-color: #2c2c2e;
   border-radius: 5px;
