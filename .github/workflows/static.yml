@@ -38,22 +38,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: List directory contents
+        run: ls -la
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Inject environment variables
         run: |
-          sed -i 's|CONTROL_WS_URL_PLACEHOLDER|'${{ secrets.CONTROL_WS_URL }}'|g' index.html
-          sed -i 's|POSITION_WS_URL_PLACEHOLDER|'${{ secrets.POSITION_WS_URL }}'|g' index.html
-          sed -i 's|VIDEO1_WS_URL_PLACEHOLDER|'${{ secrets.VIDEO1_WS_URL }}'|g' index.html
-          sed -i 's|VIDEO2_WS_URL_PLACEHOLDER|'${{ secrets.VIDEO2_WS_URL }}'|g' index.html
-          sed -i 's|VIDEO3_WS_URL_PLACEHOLDER|'${{ secrets.VIDEO3_WS_URL }}'|g' index.html
+          if [ -f index.html ]; then
+            sed -i "s|CONTROL_WS_URL_PLACEHOLDER|${{ secrets.CONTROL_WS_URL }}|g" index.html
+            sed -i "s|POSITION_WS_URL_PLACEHOLDER|${{ secrets.POSITION_WS_URL }}|g" index.html
+            sed -i "s|VIDEO1_WS_URL_PLACEHOLDER|${{ secrets.VIDEO1_WS_URL }}|g" index.html
+            sed -i "s|VIDEO2_WS_URL_PLACEHOLDER|${{ secrets.VIDEO2_WS_URL }}|g" index.html
+            sed -i "s|VIDEO3_WS_URL_PLACEHOLDER|${{ secrets.VIDEO3_WS_URL }}|g" index.html
+            echo "Environment variables injected successfully"
+          else
+            echo "Error: index.html not found"
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
           path: "."
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
