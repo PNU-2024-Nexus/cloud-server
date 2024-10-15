@@ -33,18 +33,27 @@ jobs:
       VIDEO1_WS_URL: ${{ secrets.VIDEO1_WS_URL }}
       VIDEO2_WS_URL: ${{ secrets.VIDEO2_WS_URL }}
       VIDEO3_WS_URL: ${{ secrets.VIDEO3_WS_URL }}
-      
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      - name: Inject environment variables
+        run: |
+          sed -i 's|CONTROL_WS_URL_PLACEHOLDER|'${{ secrets.CONTROL_WS_URL }}'|g' index.html
+          sed -i 's|POSITION_WS_URL_PLACEHOLDER|'${{ secrets.POSITION_WS_URL }}'|g' index.html
+          sed -i 's|VIDEO1_WS_URL_PLACEHOLDER|'${{ secrets.VIDEO1_WS_URL }}'|g' index.html
+          sed -i 's|VIDEO2_WS_URL_PLACEHOLDER|'${{ secrets.VIDEO2_WS_URL }}'|g' index.html
+          sed -i 's|VIDEO3_WS_URL_PLACEHOLDER|'${{ secrets.VIDEO3_WS_URL }}'|g' index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: '.'
+          path: "."
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

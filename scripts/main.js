@@ -3,12 +3,12 @@ import PositionHandler from "./positionHandler.js";
 import VideoStreamHandler from "./videoStreamHandler.js";
 import loadUnityScreen from "./loadUnityScreen.js";
 
-const CONTROL_WS_URL = process.env.CONTROL_WS_URL;
-const POSITION_WS_URL = process.env.POSITION_WS_URL;
+const CONTROL_WS_URL = window.env.CONTROL_WS_URL;
+const POSITION_WS_URL = window.env.POSITION_WS_URL;
 
-const VIDEO1_WS_URL = process.env.VIDEO1_WS_URL;
-const VIDEO2_WS_URL = process.env.VIDEO2_WS_URL;
-const VIDEO3_WS_URL = process.env.VIDEO3_WS_URL;
+const VIDEO1_WS_URL = window.env.VIDEO1_WS_URL;
+const VIDEO2_WS_URL = window.env.VIDEO2_WS_URL;
+const VIDEO3_WS_URL = window.env.VIDEO3_WS_URL;
 
 // NOTE: Control
 const controlHandler = new ControlHandler("controlLog");
