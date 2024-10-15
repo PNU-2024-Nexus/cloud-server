@@ -20,9 +20,12 @@
           ></iframe>
         </div>
         <div class="video-container">
-          <video class="video-display" id="video1"></video>
-          <video class="video-display" id="video2"></video>
-          <video class="video-display" id="video3"></video>
+          <div class="video-canvas-wrap">
+            <video class="video-display" id="videoElement1" autoplay></video>
+            <canvas id="overlayCanvas"></canvas>
+          </div>
+          <video class="video-display" id="videoElement2" autoplay></video>
+          <video class="video-display" id="videoElement3" autoplay></video>
         </div>
       </section>
 
@@ -39,35 +42,32 @@
 
         <div class="panel">
           <h2>Video Subscribe</h2>
-          <button class="secondary" id="subscribeVideo1">
+          <button class="secondary" id="videoSubscribe1">
             Subscribe Video 1
           </button>
-          <button class="secondary" id="subscribeVideo2">
+          <button class="secondary" id="videoSubscribe2">
             Subscribe Video 2
           </button>
-          <button class="secondary" id="subscribeVideo3">
+          <button class="secondary" id="videoSubscribe3">
             Subscribe Video 3
           </button>
         </div>
 
         <div class="panel">
           <h2>Initial Position</h2>
+          <button class="secondary" id="getPosition">Get Position</button>
+          <div class="log-box" id="positionDisplay"></div>
           <button id="setInitialPosition">Set Initial Position</button>
         </div>
 
         <div class="panel">
           <h2>Robot Control</h2>
-          <select id="robotSelect">
-            <option value="">Select a robot</option>
-            <option value="robot1">Robot 1</option>
-            <option value="robot2">Robot 2</option>
-          </select>
-          <div id="robotCommands"></div>
+          <button id="controlRobot">Control Robot</button>
+          <div class="log-box" id="controlLog"></div>
         </div>
       </section>
     </div>
 
-    <script src="./control/control.js" type="module"></script>
-    <script src="./lidar/lidar.js" type="module"></script>
+    <script src="./scripts/main.js" type="module"></script>
   </body>
 </html>
