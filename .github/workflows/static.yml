@@ -45,19 +45,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Inject environment variables
+      - name: Create environment.js file
         run: |
-          if [ -f index.html ]; then
-            sed -i "s|CONTROL_WS_URL_PLACEHOLDER|${{ secrets.CONTROL_WS_URL }}|g" index.html
-            sed -i "s|POSITION_WS_URL_PLACEHOLDER|${{ secrets.POSITION_WS_URL }}|g" index.html
-            sed -i "s|VIDEO1_WS_URL_PLACEHOLDER|${{ secrets.VIDEO1_WS_URL }}|g" index.html
-            sed -i "s|VIDEO2_WS_URL_PLACEHOLDER|${{ secrets.VIDEO2_WS_URL }}|g" index.html
-            sed -i "s|VIDEO3_WS_URL_PLACEHOLDER|${{ secrets.VIDEO3_WS_URL }}|g" index.html
-            echo "Environment variables injected successfully"
-          else
-            echo "Error: index.html not found"
-            exit 1
-          fi
+          echo "window.env = {" > environment.js
+          echo "  CONTROL_WS_URL: '${{ secrets.CONTROL_WS_URL }}'," >> environment.js
+          echo "  POSITION_WS_URL: '${{ secrets.POSITION_WS_URL }}'," >> environment.js
+          echo "  VIDEO1_WS_URL: '${{ secrets.VIDEO1_WS_URL }}'," >> environment.js
+          echo "  VIDEO2_WS_URL: '${{ secrets.VIDEO2_WS_URL }}'," >> environment.js
+          echo "  VIDEO3_WS_URL: '${{ secrets.VIDEO3_WS_URL }}'" >> environment.js
+          echo "};" >> environment.js
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
