@@ -27,6 +27,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
       CONTROL_WS_URL: ${{ secrets.CONTROL_WS_URL }}
       POSITION_WS_URL: ${{ secrets.POSITION_WS_URL }
       VIDEO1_WS_URL: ${{ secrets.VIDEO1_WS_URL }}
