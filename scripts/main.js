@@ -18,7 +18,11 @@ document.getElementById("controlRobot").addEventListener("click", () => {
 });
 
 // NOTE: Position
-const positionHandler = new PositionHandler("overlayCanvas", "positionDisplay");
+const positionHandler = new PositionHandler(
+  "overlayCanvas",
+  "positionDisplay",
+  "initialPositionDisplay"
+);
 
 // NOTE: Video
 const videoHandler1 = new VideoStreamHandler("videoElement1");

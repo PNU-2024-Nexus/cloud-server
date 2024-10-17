@@ -1,8 +1,15 @@
 class PositionHandler {
-  constructor(canvasElementId, displayElementId) {
-    this.canvas = document.getElementById(canvasElementId);
-    this.ctx = this.canvas.getContext("2d");
+  constructor(
+    canvasElementId,
+    displayElementId,
+    initialPositionDisplayElementId
+  ) {
+    // this.canvas = document.getElementById(canvasElementId);
+    // this.ctx = this.canvas.getContext("2d");
     this.displayElement = document.getElementById(displayElementId);
+    this.initialPositionDisplay = document.getElementById(
+      initialPositionDisplayElementId
+    );
     this.websocket = null;
     this.initialPosition = null;
   }
@@ -30,7 +37,7 @@ class PositionHandler {
       this.updatePositionDisplay(positionData);
 
       if (this.initialPosition) {
-        this.drawPositionOnCanvas(positionData);
+        // this.drawPositionOnCanvas(positionData);
       }
     }
   }
@@ -48,11 +55,22 @@ class PositionHandler {
             new TextDecoder().decode(event.data)
           );
           console.log("Initial position set:", this.initialPosition);
+          this.updateInitialPositionDisplay();
           this.websocket.onmessage = originalOnMessage;
         }
       };
     } else {
       console.error("Position WebSocket is not open");
+    }
+  }
+
+  updateInitialPositionDisplay() {
+    if (this.initialPosition && this.initialPositionDisplay) {
+      this.initialPositionDisplay.textContent = JSON.stringify(
+        this.initialPosition,
+        null,
+        2
+      );
     }
   }
 
